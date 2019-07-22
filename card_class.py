@@ -17,9 +17,11 @@ class Card:
 
     def __repr__(self):
         if type(self.value) == str:
-            return "Card({}, '{}')".format(self.suit, self.value)
+            return "Card('{}', '{}')".format(self.suit, self.value)
         else:
-            return "Card({}, {})".format(self.suit, self.value)
+            return "Card('{}', {})".format(self.suit, self.value)
 
     def __str__(self):
         return "{} {}".format(self.suit, self.value)
+
+
