@@ -25,5 +25,8 @@ class BlackjackTests(unittest.TestCase):
         for i in range(2):
             self.game.hit()
 
+        self.assertFalse(self.game.player_total == 0)
+        self.assertFalse(self.game.comp_total == 0)
+
 if __name__ == "__main__":
     unittest.main()
