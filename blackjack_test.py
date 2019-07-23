@@ -11,6 +11,8 @@ class BlackjackTests(unittest.TestCase):
         self.assertEqual(len(self.game.deck), 52)
         self.assertEqual(len(self.game.player_hand), 0)
         self.assertEqual(len(self.game.comp_hand), 0)
+        self.assertEqual(self.game.player_total, 0)
+        self.assertEqual(self.game.comp_total, 0)
 
     def test_hit(self):
         for i in range(4):
@@ -18,6 +20,10 @@ class BlackjackTests(unittest.TestCase):
         self.assertEqual(len(self.game.player_hand), 2)
         self.assertEqual(len(self.game.comp_hand), 2)
         self.assertEqual(len(self.game.deck), 48)
+
+    def test_adding_values_to_total(self):
+        for i in range(2):
+            self.game.hit()
 
 if __name__ == "__main__":
     unittest.main()
