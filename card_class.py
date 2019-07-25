@@ -17,12 +17,19 @@ class Card:
         else:
             return self.ace_value()
 
-    def ace_value(self, total): #Need to fix
+    def ace_value(self, turn, total, decision = 1):
         '''Gets the ace value'''
-        if total <= 10:
-            return 11
+        if turn % 2 == 0:
+            self.player_choice(decision)
         else:
-            return 1
+            if total <= 10:
+                return 11
+            else:
+                return 1
+
+    def player_choice(self, decision):
+        '''Gets the player's choice for the ace value'''
+        return decision
 
     def __repr__(self):
         if type(self.value) == str:
