@@ -28,7 +28,14 @@ class Blackjack:
         self.turn += 1
 
     def add_values(self):
-        pass
+        if self.turn % 2 == 0:
+            self.player_total = 0
+            for card in self.player_hand:
+                self.player_total += card.get_card_value()
+        else:
+            self.comp_total = 0
+            for card in self.comp_hand:
+                self.comp_total += card.get_card_value()
 
 
 if __name__ == "__main__":
