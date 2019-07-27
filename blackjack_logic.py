@@ -17,25 +17,23 @@ class Blackjack:
     def hit(self):
         '''Handles adding cards to a hand'''
         random.shuffle(self.deck)
+        card = self.deck.pop()
         if self.turn % 2 == 0:
-            self.player_hand.append(self.deck.pop())
+            self.player_hand.append(card)
         else:
-            self.comp_hand.append(self.deck.pop())
-        self.add_values()
+            self.comp_hand.append(card)
+        self.add_values(card)
         self.increment_turn()
 
     def increment_turn(self):
         self.turn += 1
 
-    def add_values(self):
+    def add_values(self, card): #Need to fix for ace values
         if self.turn % 2 == 0:
-            self.player_total = 0
-            for card in self.player_hand:
-                self.player_total += card.get_card_value()
+            self.player_total += card.get_card_value()
         else:
-            self.comp_total = 0
-            for card in self.comp_hand:
-                self.comp_total += card.get_card_value()
+            self.comp_total += card.get_card_value()
+
 
 
 if __name__ == "__main__":
