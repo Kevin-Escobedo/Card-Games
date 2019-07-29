@@ -12,24 +12,22 @@ class Card:
         '''Gets the value needed for blackjack'''
         if type(self.value) == int:
             return self.value
-        elif self.value in ["J", "Q", "K"]:
+        else:
             return 10
-        else:
-            return self.ace_value()
 
-    def ace_value(self, turn, total, decision = 1):
-        '''Gets the ace value'''
-        if turn % 2 == 0:
-            self.player_choice(decision)
-        else:
-            if total <= 10:
-                return 11
-            else:
-                return 1
-
-    def player_choice(self, decision):
-        '''Gets the player's choice for the ace value'''
-        return decision
+##    def ace_value(self, turn, total): #Fix Later
+##        '''Gets the ace value'''
+##        if turn % 2 == 0:
+##            self.player_choice(decision)
+##        else:
+##            if total <= 10:
+##                return 11
+##            else:
+##                return 1
+##
+##    def player_choice(self, decision):
+##        '''Gets the player's choice for the ace value'''
+##        return decision
 
     def __repr__(self):
         if type(self.value) == str:
