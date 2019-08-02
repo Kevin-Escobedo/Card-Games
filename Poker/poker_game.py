@@ -27,7 +27,7 @@ class PokerGame:
 
 
     def check_royal_flush(self, hand) -> bool:
-        '''Checks if cards contain five cards of the same suit (10 - A)'''
+        '''Checks if cards contain five cards of the same suit (10 - A) #1'''
         cards = sorted(hand + self.flop + self.turn + self.river, key = lambda c: self.card_values[c.value])
         royal = [card for card in cards if card.value in [10, "J", "Q", "K", "A"]]
         if len(royal) >= 5:
@@ -42,7 +42,7 @@ class PokerGame:
             return False
 
     def check_straight_flush(self, hand) -> bool:
-        '''Checks if cards contain 5 consecutive cards of the same suit'''
+        '''Checks if cards contain 5 consecutive cards of the same suit #2'''
         cards = sorted(hand + self.flop + self.turn + self.river, key = lambda c: self.card_values[c.value])
         lower = self.card_values[2]
         higher = self.card_values[6]
@@ -71,4 +71,19 @@ class PokerGame:
                 lower += 1
                 higher += 1
         return False
+
+    def check_four_of_a_kind(self, hand) -> bool:
+        '''Checks if cards contain four of a kind #3'''
+        cards = sorted(hand + self.flop + self.turn + self.river, key = lambda c: self.card_values[c.value])
+        totals = dict()
+        for card in cards:
+            if self.card_values[card.value] in totals:
+                totals[self.card_values[card.value]] += 1
+            else:
+                totals[self.card_values[card.value]] = 1
+        for key in totals:
+            if totals[key] == 4:
+                return True
+        return False
+
 
