@@ -31,16 +31,21 @@ class PokerGame:
         cards = sorted(hand + self.flop + self.turn + self.river, key = lambda c: self.card_values[c.value])
         royal = [card for card in cards if card.value in [10, "J", "Q", "K", "A"]]
         if len(royal) >= 5:
-            clubs = [card for card in cards if card.suit == "Club"]
-            diamonds = [card for card in cards if card.suit == "Diamond"]
-            spades = [card for card in cards if card.suit == "Spade"]
-            hearts = [card for card in cards if card.suit == "Heart"]
+            clubs = [card for card in royal if card.suit == "Club"]
+            diamonds = [card for card in royal if card.suit == "Diamond"]
+            spades = [card for card in royal if card.suit == "Spade"]
+            hearts = [card for card in royal if card.suit == "Heart"]
             L = [clubs, diamonds, spades, hearts]
             check_totals = [len(stacks) >= 5 for stacks in L]
             return any(check_totals)
         else:
             return False
 
+    def check_straight_flush(self, hand):
+        '''Checks if cards contain 5 consecutive cards of the same suit'''
+        cards = sorted(hand + self.flop + self.turn + self.river, key = lambda c: self.card_values[c.value])
+
+        
 
 
 
