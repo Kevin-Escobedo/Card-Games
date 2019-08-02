@@ -22,11 +22,24 @@ class PokerGame:
         self.flop = []
         self.turn = []
         self.river = []
+        self.card_values = {2:2, 3:3, 4:4, 5:5, 6:6, 7:7,
+                8:8, 9:9, 10:10, "J": 10, "Q": 11, "K": 13, "A": 14}
 
 
     def check_royal_flush(self, hand):
         '''Checks if cards contain five cards of the same suit (10 - A)'''
-        cards = hand + self.flop + self.turn + self.river
+        cards = sorted(hand + self.flop + self.turn + self.river, key = lambda c: self.card_values[c.value])
+        royal = [card for card in cards if card.value in [10, "J", "Q", "K", "A"]]
+        if len(royal) >= 5:
+            clubs = [card for card in cards if card.suit == "Club"]
+            diamonds = [card for card in cards if card.suit == "Diamond"]
+            spades = [card for card in cards if card.suit == "Spade"]
+            hearts = [card for card in cards if card.suit == "Heart"]
+            L = [clubs, diamonds, spades, hearts]
+            check_totals = [len(stacks) >= 5 for stacks in L]
+            return any(check_totals)
+        else:
+            return False
 
 
 
