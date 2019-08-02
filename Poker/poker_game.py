@@ -26,7 +26,7 @@ class PokerGame:
                 8:8, 9:9, 10:10, "J": 10, "Q": 11, "K": 13, "A": 14}
 
 
-    def check_royal_flush(self, hand):
+    def check_royal_flush(self, hand) -> bool:
         '''Checks if cards contain five cards of the same suit (10 - A)'''
         cards = sorted(hand + self.flop + self.turn + self.river, key = lambda c: self.card_values[c.value])
         royal = [card for card in cards if card.value in [10, "J", "Q", "K", "A"]]
@@ -41,12 +41,34 @@ class PokerGame:
         else:
             return False
 
-    def check_straight_flush(self, hand):
+    def check_straight_flush(self, hand) -> bool:
         '''Checks if cards contain 5 consecutive cards of the same suit'''
         cards = sorted(hand + self.flop + self.turn + self.river, key = lambda c: self.card_values[c.value])
+        lower = self.card_values[2]
+        higher = self.card_values[6]
 
-        
+        collected_cards = []
+        collected_values = []
 
-
-
+        while higher != self.card_values["A"]:
+            reach = range(lower, higher+1)
+            for card in cards:
+                if self.card_values[card.value] in reach and self.card_values[card.value] not in collected_values:
+                    collected_cards.append(card)
+                    collected_values.append(self.card_values[card.value])
+            if len(collected_cards) >= 5:
+                clubs = [card for card in collected_cards if card.suit == "Club"]
+                diamonds = [card for card in collected_cards if card.suit == "Diamond"]
+                spades = [card for card in collected_cards if card.suit == "Spade"]
+                hearts = [card for card in collected_cards if card.suit == "Heart"]
+                L = [clubs, diamonds, spades, hearts]
+                check_totals = [len(stack) >= 5 for stack in L]
+                if any(check_totals):
+                    return True
+            else:
+                collected_cards = []
+                collected_values = []
+                lower += 1
+                higher += 1
+        return False
 
