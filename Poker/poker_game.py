@@ -17,14 +17,19 @@ import card_class
 
 class PokerGame:
     def __init__(self):
+        self.deck = self.create_deck()
         self.player_hand = []
         self.dealer_hand = []
         self.flop = []
         self.turn = []
         self.river = []
-        self.card_values = {2:2, 3:3, 4:4, 5:5, 6:6, 7:7,
-                8:8, 9:9, 10:10, "J": 10, "Q": 11, "K": 13, "A": 14}
-
+        self.card_values = {2:2, 3:3, 4:4, 5:5, 6:6, 7:7, 8:8, 9:9, 10:10, "J": 10, "Q": 11, "K": 13, "A": 14}
+       
+    def create_deck(self) -> [card_class.Card]:
+        '''Makes the deck'''
+        values = [x for x in range(2, 11)] + ["J", "Q", "K", "A"]
+        suits = ["Heart", "Diamond", "Spade", "Club"]
+        return [card_class.Card(suit, value) for suit in suits for value in values]
 
     def check_royal_flush(self, hand) -> bool:
         '''Checks if cards contain five cards of the same suit (10 - A) #1'''
@@ -87,3 +92,6 @@ class PokerGame:
         return False
 
 
+if __name__ == "__main__":
+    p = PokerGame()
+    assert len(p.deck) == 52
