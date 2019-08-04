@@ -3,14 +3,11 @@
 
 #Texas Hold'em Rules
 #Each player is dealt 2 cards face down - "Hole"
-
 #5 more cards dealt face up "Community"
 #Dealt in 3 stages
-
 #Flop - First 3 cards
 #Turn - One more card
 #River - Last card
-
 #Players construct best five card hand from 7 cards
 
 import card_class
@@ -23,8 +20,7 @@ class PokerGame:
         self.flop = []
         self.turn = []
         self.river = []
-        self.card_values = {2:2, 3:3, 4:4, 5:5, 6:6, 7:7, 8:8, 9:9, 10:10, "J": 10, "Q": 11, "K": 13, "A": 14}
-       
+        
     def create_deck(self) -> [card_class.Card]:
         '''Makes the deck'''
         values = [x for x in range(2, 11)] + ["J", "Q", "K", "A"]
@@ -33,7 +29,7 @@ class PokerGame:
 
     def check_royal_flush(self, hand) -> bool:
         '''Checks if cards contain five cards of the same suit (10 - A) #1'''
-        cards = sorted(hand + self.flop + self.turn + self.river, key = lambda c: self.card_values[c.value])
+        cards = sorted(hand + self.flop + self.turn + self.river, key = lambda c: int(c))
         royal = [card for card in cards if card.value in [10, "J", "Q", "K", "A"]]
         if len(royal) >= 5:
             clubs = [card for card in royal if card.suit == "Club"]
@@ -48,19 +44,19 @@ class PokerGame:
 
     def check_straight_flush(self, hand) -> bool:
         '''Checks if cards contain 5 consecutive cards of the same suit #2'''
-        cards = sorted(hand + self.flop + self.turn + self.river, key = lambda c: self.card_values[c.value])
-        lower = self.card_values[2]
-        higher = self.card_values[6]
+        cards = sorted(hand + self.flop + self.turn + self.river, key = lambda c: int(c))
+        lower = 2
+        higher = 6
 
         collected_cards = []
         collected_values = []
 
-        while higher != self.card_values["A"]:
+        while higher != int(card_class.Card("Heart", "A")) + 1:
             reach = range(lower, higher+1)
             for card in cards:
-                if self.card_values[card.value] in reach and self.card_values[card.value] not in collected_values:
+                if int(card) in reach and self.check_flush_helper(card, collected_values):
                     collected_cards.append(card)
-                    collected_values.append(self.card_values[card.value])
+                    collected_values.append(int(card))
             if len(collected_cards) >= 5:
                 clubs = [card for card in collected_cards if card.suit == "Club"]
                 diamonds = [card for card in collected_cards if card.suit == "Diamond"]
@@ -77,15 +73,22 @@ class PokerGame:
                 higher += 1
         return False
 
+    def check_flush_helper(self, card, collected_values) -> bool:
+        '''Helps check if a card is in the collected values'''
+        if int(card) != 10:
+            return card not in collected_values
+        else:
+            return True
+
     def check_four_of_a_kind(self, hand) -> bool:
         '''Checks if cards contain four of a kind #3'''
-        cards = sorted(hand + self.flop + self.turn + self.river, key = lambda c: self.card_values[c.value])
+        cards = sorted(hand + self.flop + self.turn + self.river, key = lambda c: int(c))
         totals = dict()
         for card in cards:
-            if self.card_values[card.value] in totals:
-                totals[self.card_values[card.value]] += 1
+            if int(card) in totals:
+                totals[int(card)] += 1
             else:
-                totals[self.card_values[card.value]] = 1
+                totals[int(card)] = 1
         for key in totals:
             if totals[key] == 4:
                 return True
@@ -95,3 +98,5 @@ class PokerGame:
 if __name__ == "__main__":
     p = PokerGame()
     assert len(p.deck) == 52
+    hand = [p.deck.pop() for i in range(5)]
+    
