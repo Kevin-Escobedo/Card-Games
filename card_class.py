@@ -38,4 +38,15 @@ class Card:
     def __str__(self):
         return "{} {}".format(self.suit, self.value)
 
+    def __int__(self):
+        values = {2:2, 3:3, 4:4, 5:5, 6:6, 7:7,
+                  8:8, 9:9, "J":10, "Q": 11, "K":12, "A": 13}
+        return values[self.value]
 
+
+if __name__ == "__main__":
+    card_values = {2:2, 3:3, 4:4, 5:5, 6:6, 7:7,
+                8:8, 9:9, 10:10, "J": 10, "Q": 11, "K": 13, "A": 14}
+    suits = ["Diamond", "Spade", "Heart", "Club"]
+    values = [x for x in range(2, 11)] + ["J", "Q", "K", "A"]
+    deck = [Card(suit, value) for suit in suits for value in values]
