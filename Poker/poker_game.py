@@ -98,5 +98,4 @@ class PokerGame:
 if __name__ == "__main__":
     p = PokerGame()
     assert len(p.deck) == 52
-    hand = [p.deck.pop() for i in range(5)]
     
