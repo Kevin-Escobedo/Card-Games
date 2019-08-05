@@ -99,6 +99,22 @@ class PokerGame:
       check_totals = [totals[key] for key in totals]
       return 3 in check_totals and 2 in check_totals
 
+  def check_flush(self, hand) -> bool:
+      '''Checks if cards contain 5 cards of the same suit #5'''
+      cards = sorted(hand + self.flop + self.turn + self.river, key = lambda c: int(c))
+      
+      clubs = [card for card in cards if card.suit == "Club"]
+      diamonds = [card for card in cards if card.suit == "Diamond"]
+      spades = [card for card in cards if card.suit == "Spade"]
+      hearts = [card for card in cards if card.suit == "Heart"]
+
+      temp = [clubs, diamonds, spades, hearts]
+
+      check_totals = [len(stacks) >= 5 for stacks in L]
+
+      return any(check_totals)
+
+
 
 if __name__ == "__main__":
     p = PokerGame()
