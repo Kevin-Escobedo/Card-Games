@@ -115,6 +115,32 @@ class PokerGame:
       return any(check_totals)
 
 
+  def check_straight(self, hand) -> bool:
+      '''Checks if cards contain 5 cards in a sequence #6'''
+      cards = sorted(hand + self.flop + self.turn + self.river, key = lambda c: int(c))
+      lower = 2
+      higher = 6
+
+      collected_cards = []
+      collected_values = []
+
+      while higher != int(card_class.Card("Heart", "A")) + 1:
+          reach = range(lower, higher + 1)
+          for card in cards:
+              if int(card) in reach and int(card) not in collected_values:
+                  collected_cards.append(card)
+                  collected_values.append(card)
+            if len(collected_cards) >= 5:
+                return True
+            else:
+                collected_cards = []
+                collected_values = []
+                lower += 1
+                higher += 1
+        return False
+
+
+
 
 if __name__ == "__main__":
     p = PokerGame()
