@@ -140,7 +140,7 @@ class PokerGame:
         return False
 
     def check_three_of_a_kind(self, hand) -> bool:
-        '''Checks if cards contain three cards of the same rank'''
+        '''Checks if cards contain three cards of the same rank #7'''
         cards = sorted(hand + self.flop + self.turn + self.river, key = lambda c: int(c))
         totals = dict()
         for card in cards:
@@ -151,8 +151,17 @@ class PokerGame:
         check_totals = [totals[key] for key in totals]
         return 3 in check_totals
 
-
-
+    def check_two_pair(self, hand) -> bool:
+        '''Checks if cards contain two pairs #8'''
+        cards = sorted(hand + self.flop + self.turn + self.river, key = lambda c: int(c))
+        totals = dict()
+        for card in cards:
+            if int(card) in totals:
+                totals[int(card)] += 1
+            else:
+                totals[int(card)] = 1
+        check_totals = [totals[key] for key in totals]
+        return check_totals.count(2) >= 2
 
 
 if __name__ == "__main__":
