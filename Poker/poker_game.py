@@ -163,6 +163,18 @@ class PokerGame:
         check_totals = [totals[key] for key in totals]
         return check_totals.count(2) >= 2
 
+    def check_pair(self, hand) -> bool:
+        '''Checks if cards contain a pair #9'''
+        cards = sorted(hand + self.flop + self.turn + self.river, key = lambda c: int(c))
+        totals = dict()
+        for card in cards:
+            if int(card) in totals:
+                totals[int(card)] += 1
+            else:
+                totals[int(card)] = 1
+        check_totals = [totals[key] for key in totals]
+        return 2 in check_totals
+
 
 if __name__ == "__main__":
     p = PokerGame()
