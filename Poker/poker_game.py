@@ -178,8 +178,7 @@ class PokerGame:
     def check_high_card(self, hand) -> int:
         '''Checks cards for highest card #10'''
         cards = sorted(hand + self.flop + self.turn + self.river, key = lambda c: int(c))
-        values = [card.value for card in cards]
-        return max(values)
+        return max([int(card) for card in cards])
 
 
 if __name__ == "__main__":
