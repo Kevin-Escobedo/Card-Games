@@ -87,6 +87,18 @@ class PokerGame:
                 return True
         return False
 
+    def check_full_house(self, hand) -> bool:
+        '''Checks if cards contain three of a kind with a pair #4'''
+        cards = sorted(hand + self.flop + self.turn + self.river, key = lambda c: int(c))
+        totals = dict()
+        for card in cards:
+            if int(card) in totals:
+                totals[int(card)] += 1
+            else:
+                totals[int(card)] = 1
+      check_totals = [totals[key] for key in totals]
+      return 3 in check_totals and 2 in check_totals
+
 
 if __name__ == "__main__":
     p = PokerGame()
