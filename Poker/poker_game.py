@@ -2,12 +2,12 @@
 #Email: escobedo001@gmail.com
 
 #Texas Hold'em Rules
-#Each player is dealt 2 cards face down - "Hole"
-#5 more cards dealt face up "Community"
-#Dealt in 3 stages
-#Flop - First 3 cards
-#Turn - One more card
-#River - Last card
+#Hole - Each player is dealt 2 cards face down
+#Community - 5 more cards dealt face up
+#   Dealt in 3 stages
+#       Flop - First 3 cards
+#       Turn - One more card
+#       River - Last card
 #Players construct best five card hand from 7 cards
 
 import card_class
@@ -54,7 +54,7 @@ class PokerGame:
         while higher != int(card_class.Card("Heart", "A")) + 1:
             reach = range(lower, higher+1)
             for card in cards:
-                if int(card) in reach and self.check_flush_helper(card, collected_values):
+                if int(card) in reach and int(card) not in collected_values:
                     collected_cards.append(card)
                     collected_values.append(int(card))
             if len(collected_cards) >= 5:
@@ -72,13 +72,6 @@ class PokerGame:
                 lower += 1
                 higher += 1
         return False
-
-    def check_flush_helper(self, card, collected_values) -> bool:
-        '''Helps check if a card is in the collected values'''
-        if int(card) != 10:
-            return card not in collected_values
-        else:
-            return True
 
     def check_four_of_a_kind(self, hand) -> bool:
         '''Checks if cards contain four of a kind #3'''
