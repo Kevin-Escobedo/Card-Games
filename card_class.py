@@ -39,9 +39,11 @@ class Card:
         return "{} {}".format(self.suit, self.value)
 
     def __int__(self):
-        values = {2:2, 3:3, 4:4, 5:5, 6:6, 7:7,
-                  8:8, 9:9, "J":10, "Q": 11, "K":12, "A": 13}
-        return values[self.value]
+        values = {"J": 11, "Q": 12, "K": 13, "A": 14}
+        if type(self.value) == int:
+            return self.value
+        else:
+            return values[self.value]
 
 
 if __name__ == "__main__":
