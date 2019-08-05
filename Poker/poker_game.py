@@ -139,6 +139,19 @@ class PokerGame:
                 higher += 1
         return False
 
+    def check_three_of_a_kind(self, hand) -> bool:
+        '''Checks if cards contain three cards of the same rank'''
+        cards = sorted(hand + self.flop + self.turn + self.river, key = lambda c: int(c))
+        totals = dict()
+        for card in cards:
+            if int(card) in totals:
+                totals[int(card)] += 1
+            else:
+                totals[int(card)] = 1
+        check_totals = [totals[key] for key in totals]
+        return 3 in check_totals
+
+
 
 
 
