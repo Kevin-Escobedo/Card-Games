@@ -11,6 +11,7 @@
 #Players construct best five card hand from 7 cards
 
 import card_class
+import random
 
 class PokerGame:
     def __init__(self):
@@ -20,6 +21,29 @@ class PokerGame:
         self.flop = []
         self.turn = []
         self.river = []
+
+    def deal_to_hands(self) -> None:
+        '''Deals two cards to both the player and the dealer'''
+        random.shuffle(self.deck)
+        for i in range(2):
+            self.player_hand.append(self.deck.pop())
+            self.dealer_hand.append(self.deck.pop())
+
+    def deal_flop(self) -> None:
+        '''Deals 3 cards to the flop'''
+        random.shuffle(self.deck)
+        for i in range(3):
+            self.flop.append(self.deck.pop())
+
+    def deal_turn(self) -> None:
+        '''Deals a card to the turn'''
+        random.shuffle(self.deck)
+        self.turn.append(self.deck.pop())
+
+    def deal_river(self) -> None:
+        '''Deals a card to the river'''
+        random.shuffle(self.deck)
+        self.river.append(self.deck.pop())
         
     def create_deck(self) -> [card_class.Card]:
         '''Makes the deck'''
