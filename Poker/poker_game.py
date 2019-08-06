@@ -29,6 +29,12 @@ class PokerGame:
             self.player_hand.append(self.deck.pop())
             self.dealer_hand.append(self.deck.pop())
 
+    def deal_community(self) -> None:
+        '''Deals the community cards'''
+        self.deal_flop()
+        self.deal_turn()
+        self.deal_river()
+
     def deal_flop(self) -> None:
         '''Deals 3 cards to the flop'''
         random.shuffle(self.deck)
@@ -120,10 +126,11 @@ class PokerGame:
                 totals[int(card)] += 1
             else:
                 totals[int(card)] = 1
-      check_totals = [totals[key] for key in totals]
-      return 3 in check_totals and 2 in check_totals
+        check_totals = [totals[key] for key in totals]
+        return 3 in check_totals and 2 in check_totals
 
-  def check_flush(self, hand) -> bool:
+
+    def check_flush(self, hand) -> bool:
       '''Checks if cards contain 5 cards of the same suit #5'''
       cards = sorted(hand + self.flop + self.turn + self.river, key = lambda c: int(c))
       
@@ -134,26 +141,28 @@ class PokerGame:
 
       temp = [clubs, diamonds, spades, hearts]
 
-      check_totals = [len(stacks) >= 5 for stacks in L]
+      check_totals = [len(stacks) >= 5 for stacks in temp]
 
       return any(check_totals)
 
 
-  def check_straight(self, hand) -> bool:
-      '''Checks if cards contain 5 cards in a sequence #6'''
-      cards = sorted(hand + self.flop + self.turn + self.river, key = lambda c: int(c))
-      lower = 2
-      higher = 6
+    def check_straight(self, hand) -> bool:
+        '''Checks if cards contain 5 cards in a sequence #6'''
+        cards = sorted(hand + self.flop + self.turn + self.river, key = lambda c: int(c))
+        lower = 2
+        higher = 6
 
-      collected_cards = []
-      collected_values = []
+        collected_cards = []
+        collected_values = []
 
-      while higher != int(card_class.Card("Heart", "A")) + 1:
-          reach = range(lower, higher + 1)
-          for card in cards:
-              if int(card) in reach and int(card) not in collected_values:
-                  collected_cards.append(card)
-                  collected_values.append(card)
+        while higher != int(card_class.Card("Heart", "A")) + 1:
+            reach = range(lower, higher + 1)
+
+            for card in cards:
+                if int(card) in reach and int(card) not in collected_values:
+                    collected_cards.append(card)
+                    collected_values.append(card)
+
             if len(collected_cards) >= 5:
                 return True
             else:
