@@ -215,7 +215,37 @@ class PokerGame:
 
     def gameplay(self) -> None:
         '''Goes through gameplay of Poker game, without gambling'''
-        pass
+        self.deal_to_hands()
+        self.deal_community()
+
+        self.player_score = self.check_high_card(self.player_hand)
+        self.dealer_score = self.check_high_card(self.dealer_hand)
+
+        if self.check_pair(self.player_hand):
+            self.player_score = 15 #Because check_high_card could return up to 15
+        if self.check_pair(self.dealer_hand):
+            self.dealer_score = 15
+
+        if self.check_two_pair(self.player_hand):
+            self.player_score = 16
+        if self.check_two_pair(self.dealer_hand):
+            self.dealer_score = 16
+
+        if self.check_three_of_a_kind(self.player_hand):
+            self.player_score = 17
+        if self.check_three_of_a_kind(self.dealer_hand):
+            self.dealer_score = 17
+
+        if self.check_straight(self.player_hand):
+            self.player_score = 18
+        if self.check_straight(self.dealer_hand):
+            self.dealer_score = 18
+
+        if self.check_flush(self.player_hand):
+            self.player_score = 19
+        if self.check_flush(self.dealer_hand):
+            self.dealer_score = 19
+
 
 
 if __name__ == "__main__":
