@@ -213,7 +213,7 @@ class PokerGame:
         cards = sorted(hand + self.flop + self.turn + self.river, key = lambda c: int(c))
         return max([int(card) for card in cards])
 
-    def gameplay(self) -> None:
+    def gameplay(self) -> str:
         '''Goes through gameplay of Poker game, without gambling'''
         self.deal_to_hands()
         self.deal_community()
@@ -245,6 +245,36 @@ class PokerGame:
             self.player_score = 19
         if self.check_flush(self.dealer_hand):
             self.dealer_score = 19
+
+
+        if self.check_full_house(self.player_hand):
+            self.player_score = 20
+        if self.check_full_house(self.dealer_hand):
+            self.dealer_score = 20
+
+        if self.check_four_of_a_kind(self.player_hand):
+            self.player_score = 21
+        if self.check_four_of_a_kind(self.dealer_hand):
+            self.dealer_score = 21
+
+        if self.check_straight_flush(self.player_hand):
+            self.player_score = 22
+        if self.check_straight_flush(self.dealer_hand):
+            self.dealer_score = 22
+
+        if self.check_royal_flush(self.player_hand):
+            self.player_score = 23
+        if self.check_royal_flush(self.dealer_hand):
+            self.dealer_score = 23
+
+        if self.player_score > self.dealer_score:
+            return "Player Win"
+
+        if self.player_score < self.dealer_score:
+            return "Dealer Win"
+
+        if self.player_score == self.dealer_score:
+            return "Tie"
 
 
 
