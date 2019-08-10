@@ -213,6 +213,10 @@ class PokerGame:
         cards = sorted(hand + self.flop + self.turn + self.river, key = lambda c: int(c))
         return max([int(card) for card in cards])
 
+    def gameplay(self) -> None:
+        '''Goes through gameplay of Poker game, without gambling'''
+        pass
+
 
 if __name__ == "__main__":
     p = PokerGame()
